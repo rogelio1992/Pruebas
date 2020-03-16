@@ -1,0 +1,51 @@
+<?php
+{% macro menu_links(items, attributes, menu_level) %}
+{% import _self as menus %}
+{% if items %}
+{% if menu_level == 0 %}
+<ul{{ attributes.addClass('menu') }}>
+{% else %}
+<ul class="menu">
+  {% endif %}
+  //definir una variable contadora no recuerdo como se hace en twig
+  // i = 0
+  {% for item in items %}
+    {%
+      set classes = [
+      'menu-item',
+      /// i >= 4 ? 'mas_a_mostrar'
+      item.is_expanded ? 'menu-item--expanded',
+      item.is_collapsed ? 'menu-item--collapsed',
+      item.in_active_trail ? 'menu-item--active-trail',
+    ]
+    %}
+    <li{{ item.attributes.addClass(classes) }}>
+      {{ link(item.title, item.url) }}
+      {% if item.below %}
+        {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+      {% endif %}
+    </li>
+  {% endfor %}
+  <li>
+    <a href="#" class="ver_mas">+ Ver más</a>
+  </li>
+  <li>
+    <a href="#" style="display:none" class="ver_menos">ver menos</a>
+  </li>
+</ul>
+{% endif %}
+///esto si no se donde lo pondrias.
+/// <script>
+    ///     $("a.ver_mas").on("click",function(){
+    ///          $('li.mas_a_mostrar').css('display','block');
+    ///           $(this).css("display","none");
+    ///           $(".ver_menos").css("display","block");
+    ///  })
+    /// ///     $("a.ver_menos").on("click",function(){
+    /////          $('li.mas_a_mostrar').css('display','none');
+    /////           $(this).css("display","none");
+    /////           $(".ver_mas").css("display","block");
+    /////  })
+    ///
+    ///   </script>
+{% endmacro %}

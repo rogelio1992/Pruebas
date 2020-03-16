@@ -1,0 +1,7 @@
+rspvlist.form:
+  path: '/rspvlist'
+  defaults:
+    _form: '\Drupal\rspvlist\Form\RSVPListForm'
+    _title: 'RSPV to this Event'
+  requirements:
+    _permission: 'access content'
